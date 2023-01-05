@@ -87,55 +87,49 @@ var finances = [
 ['Feb-2017', 671099]
 ];
 
-var totalMonths = 1;
+var totalMonths = 0;
 var totalProfit = 0;
-var monthlyChangeArray = [];
-var monthlyTotal = 0;
-var monthlyAverage = 0;
+var monthlyProfitChange = [];
+var monthlyProfitAverage = 0;
+var greatestDecrease = 0;
+var greatestIncrease = 0;
+var greatestDecreaseIndex = 0;
+var greatestIncreaseIndex = 0;
 
 
 
-for(var i = 0; i < finances.length-1; i++)    
-{   
-    //Get total number of months
-    totalMonths++;
-    //Get total profit
-    totalProfit += finances[i][1];
-    //Get profit and loss change average
-    monthlyChangeArray.push(finances[i+1][1]-finances[i][1]);
-    for(var i =0; i < monthlyChangeArray.length; i++)
+    
+
+    for (var i = 0; i < finances.length; i++)
     {
-        monthlyTotal += monthlyChangeArray[i];
+        totalMonths++;
+        totalProfit += finances[i][1];
+        monthlyProfitChange.push(finances[i][1]);
+        console.log(monthlyProfitChange[i])
     }
-    monthlyAverage = ((monthlyTotal/totalMonths).toFixed(2));
-
-    //Greatest profit increase and greatest decrease 
-    var greatestIncrease = 0;
-    var greatestDecrease = 0;
-
-    var greatestIncreaseIndex = 0;
-    var greatestDecreaseIndex = 0;
-
-    for(var i =0; i < monthlyChangeArray.length; i++)
+    for (var i = 1; i < monthlyProfitChange.length; i++)
     {
-        if(monthlyChangeArray[i]>greatestIncrease)
+        if(monthlyProfitChange[i]-monthlyProfitChange[i-1]>greatestIncrease)
         {
-            greatestIncrease = monthlyChangeArray[i];
-            greatestIncreaseIndex = i+2;
+            greatestIncrease = monthlyProfitChange[i]-monthlyProfitChange[i-1];
+            greatestIncreaseIndex = i;
+
         }
-        if(monthlyChangeArray[i]<greatestDecrease)
+        if(monthlyProfitChange[i]-monthlyProfitChange[i-1]<greatestDecrease)
         {
-            greatestDecrease = monthlyChangeArray[i];
-            greatestDecreaseIndex = i+2;
+            greatestDecrease = monthlyProfitChange[i]-monthlyProfitChange[i-1];
+            greatestDecreaseIndex = i;
         }
+        monthlyProfitAverage += (monthlyProfitChange[i]-monthlyProfitChange[i-1])
     }
-}
+
+
 
 console.log("Financial Analysis");
 console.log("----------------------------");
 console.log("Total Months: "+totalMonths);
 console.log("Total: $"+totalProfit);
-console.log("Average Change: $"+monthlyAverage);
+console.log("Average Change: $"+monthlyProfitAverage/finances.length);
 console.log("Greatest Increase in Profits: "+finances[greatestIncreaseIndex][0]+" "+greatestIncrease);
 console.log("Greatest Decrease in Profits: "+finances[greatestDecreaseIndex][0]+" "+greatestDecrease);
 
