@@ -105,7 +105,6 @@ var greatestIncreaseIndex = 0;
         totalMonths++;
         totalProfit += finances[i][1];
         monthlyProfitChange.push(finances[i][1]);
-        console.log(monthlyProfitChange[i])
     }
     for (var i = 1; i < monthlyProfitChange.length; i++)
     {
